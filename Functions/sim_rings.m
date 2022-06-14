@@ -5,10 +5,13 @@ function sim_rings(dir, inR, outR, distrange)
 % ----------------------------------------------------------------------
 % Input:
 % dir: output directory
+% inR: inner radius of simulated cells [pixels]
+% outR: outer radius of simulated cells [pixels]
+% distrange: a scalar or vector specifying the offset(s) between cells [pixels]
 % ----------------------------------------------------------------------
 % Output:
-% TIF files: image stacks (simulated Ca2+ imaging data)
-% TXT files: containing ROI coordinates of simluated cells
+% TIF file(s): image stack(s) (simulated Ca2+ imaging data)
+% TXT file(s): containing ROI coordinates of simluated cell(s)
 % ----------------------------------------------------------------------
 %% Parameters
 options_sim.noisescale = 1e4;
@@ -56,8 +59,8 @@ for k = 1:3
 end
 fluor(3, :) = fluor(3, :) .* 0.5; % scaling of background
 %% Generate F(xyt), add Poisson noise and save TIF stacks and ROI TXT files for all pairs of simulated cells
-simdata = single(NaN(size(im, 1), size(im, 2), options_sim.nFrames)); % xyt
-index = zeros(length(coord1_wholecell)+1, 4); % ROI read in TemplateMatchScript.m starts at row 2
+simdata = single(NaN(size(im, 1), size(im, 2), options_sim.nFrames));
+index = zeros(length(coord1_wholecell)+1, 4); % ROI read in runCATHARSiS.m starts at row 2
 im_bg = ones(size(im, 1), size(im, 2)); % background (i.e. all pixels within frame)
 bg_offset = 1; % baseline offset of background
 for m = 1:numel(distrange)
@@ -76,10 +79,8 @@ for m = 1:numel(distrange)
         out.WriteIMG(aux);
     end
     out.close
-%     disp(['Simulated TIF stack was saved to: ', dir, '\simdata_', sprintf('%03d', distrange(m)), '.tif'])
     % Save TXT ROI file (ring & center)
     [index(2:end, 1), index(2:end, 2)] = ind2sub([size(im, 1), size(im, 2)], coord1_wholecell);
     [index(2:end, 3), index(2:end, 4)] = ind2sub([size(im, 1), size(im, 2)], coord2_wholecell(:, m));
     dlmwrite([dir, '\simdata_ROI_', sprintf('%03d', distrange(m)), '.txt'], index, '\t');
-%     disp(['Simulated ROI list was saved to: ', dir, '\simdata_ROI_', sprintf('%03d', distrange(m)), '.txt'])
 end

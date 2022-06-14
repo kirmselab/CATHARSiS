@@ -18,7 +18,7 @@ clear variables; close all;
 %% Parameters (two cells will be simulated)
 inR = 9; % inner radius of simulated cells [pixels]
 outR = 15; % outer radius of simulated cells [pixels]
-distrange = 11; % a scalar or vector specifying the offset(s) between cells [pixels]
+distrange = 13; % a scalar or vector specifying the offset(s) between cells [pixels]
 % Note: If distrange = 11:10:31, then
 % • three TIF files (simulated Ca2+ imaging data)
 % • three TXT files (containing the corresponding ROI corrdinates)
