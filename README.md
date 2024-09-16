@@ -7,3 +7,5 @@ Network instability dynamics drive a transient bursting period in the developing
 
 Getting started:
 Please see "CATHARSiS_User_Manual.pdf".
+
+[![DOI](https://zenodo.org/badge/499410363.svg)](https://zenodo.org/doi/10.5281/zenodo.13767253)
